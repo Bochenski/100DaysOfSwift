@@ -33,9 +33,19 @@ class ViewController: UIViewController {
         button2.layer.borderColor = UIColor.lightGray.cgColor
         button3.layer.borderColor = UIColor.lightGray.cgColor
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(scoreTapped))
+        
         askQuestion()
     }
 
+    @objc func scoreTapped() {
+        
+        
+        let ac = UIAlertController(title: "CurrentScore" , message: "\(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+        present(ac, animated: true)
+    }
+    
     func askQuestion(action: UIAlertAction! = nil) {
         if questionsAsked == 10 {
             let acFinish = UIAlertController(title: "Complete", message: "Your final score is \(score)", preferredStyle: .alert)
