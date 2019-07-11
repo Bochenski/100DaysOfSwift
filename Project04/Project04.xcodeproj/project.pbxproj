@@ -13,6 +13,7 @@
 		6354643A22D470E100D88F76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6354643822D470E100D88F76 /* Main.storyboard */; };
 		6354643C22D470E600D88F76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6354643B22D470E600D88F76 /* Assets.xcassets */; };
 		6354643F22D470E600D88F76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6354643D22D470E600D88F76 /* LaunchScreen.storyboard */; };
+		63AAB74F22D7407100B99A29 /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AAB74E22D7407100B99A29 /* WebPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		6354643B22D470E600D88F76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6354643E22D470E600D88F76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6354644022D470E600D88F76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63AAB74E22D7407100B99A29 /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				6354643222D470E000D88F76 /* AppDelegate.swift */,
 				6354643422D470E100D88F76 /* SceneDelegate.swift */,
 				6354643622D470E100D88F76 /* ViewController.swift */,
+				63AAB74E22D7407100B99A29 /* WebPageViewController.swift */,
 				6354643822D470E100D88F76 /* Main.storyboard */,
 				6354643B22D470E600D88F76 /* Assets.xcassets */,
 				6354643D22D470E600D88F76 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63AAB74F22D7407100B99A29 /* WebPageViewController.swift in Sources */,
 				6354643722D470E100D88F76 /* ViewController.swift in Sources */,
 				6354643322D470E000D88F76 /* AppDelegate.swift in Sources */,
 				6354643522D470E100D88F76 /* SceneDelegate.swift in Sources */,
