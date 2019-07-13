@@ -12,7 +12,7 @@ class ViewController: UITableViewController {
     var flags = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Storm Viewer"
+        title = "Flag Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let fm = FileManager.default
@@ -33,14 +33,16 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Flag", for: indexPath)
-        cell.textLabel?.text = flags[indexPath.row]
+        cell.imageView?.image = UIImage(named: flags[indexPath.row])
+        
+        cell.textLabel?.text = String(flags[indexPath.row].prefix(flags[indexPath.row].count - 4))
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             vc.selectedFlag = flags[indexPath.row]
-            vc.selectedTitle = "\(indexPath.row + 1) of \(flags.count)"
+            vc.selectedTitle = String(flags[indexPath.row].prefix(flags[indexPath.row].count - 4))
             navigationController?.pushViewController(vc, animated: true)
         }
     }
