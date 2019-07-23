@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		637B0E5A22E776BA0018681C /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 637B0E5822E776B10018681C /* level2.txt */; };
+		637B0E5B22E776BA0018681C /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 637B0E5922E776BA0018681C /* level1.txt */; };
 		63C2B5BD22E62A0C007FD898 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2B5BC22E62A0C007FD898 /* AppDelegate.swift */; };
 		63C2B5BF22E62A0C007FD898 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2B5BE22E62A0C007FD898 /* SceneDelegate.swift */; };
 		63C2B5C122E62A0C007FD898 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2B5C022E62A0C007FD898 /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		637B0E5822E776B10018681C /* level2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
+		637B0E5922E776BA0018681C /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		63C2B5B922E62A0C007FD898 /* Project08.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project08.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C2B5BC22E62A0C007FD898 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63C2B5BE22E62A0C007FD898 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +46,8 @@
 			children = (
 				63C2B5BB22E62A0C007FD898 /* Project08 */,
 				63C2B5BA22E62A0C007FD898 /* Products */,
+				637B0E5922E776BA0018681C /* level1.txt */,
+				637B0E5822E776B10018681C /* level2.txt */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,8 +131,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637B0E5B22E776BA0018681C /* level1.txt in Resources */,
 				63C2B5C922E62A0F007FD898 /* LaunchScreen.storyboard in Resources */,
 				63C2B5C622E62A0F007FD898 /* Assets.xcassets in Resources */,
+				637B0E5A22E776BA0018681C /* level2.txt in Resources */,
 				63C2B5C422E62A0C007FD898 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
