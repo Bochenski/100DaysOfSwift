@@ -19,7 +19,7 @@ class ViewController: UITableViewController {
             urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"        } else {
             urlString = "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
         }
-        
+    
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 //we're ok to parse that data
@@ -73,15 +73,20 @@ class ViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func filterOn(_ term: String) {
+    @objc func filterOn(_ term: String) {
         if term == "" { return }
-        filteredPetitions.removeAll(keepingCapacity: true)
-        for petition in petitions {
-            if petition.title.lowercased().contains(term.lowercased()) {
-                filteredPetitions.append(petition)
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.filteredPetitions.removeAll(keepingCapacity: true)
+            guard let pets = self?.petitions else { return }
+            for petition in pets {
+                if petition.title.lowercased().contains(term.lowercased()) {
+                    self?.filteredPetitions.append(petition)
+                }
             }
+            
+            self?.tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
         }
-        tableView.reloadData()
+
     }
     
     @objc func showError() {
