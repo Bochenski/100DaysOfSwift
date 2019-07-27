@@ -10,29 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     var allWords = [String]()
-    var usedWords = [String]()
-    var guessedLetters = [String]()
+    var guessedLetters = [Character]()
     var answer = ""
-    var answerLabel: UILabel!
+    var guessesLeft = 7
     
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
-        
-        answerLabel = UILabel()
-        answerLabel.translatesAutoresizingMaskIntoConstraints = false
-        answerLabel.font = UIFont.systemFont(ofSize: 24)
-        answerLabel.text = ""
-        answerLabel.numberOfLines = 0
-        answerLabel.textAlignment = .right
-        answerLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-        view.addSubview(answerLabel)
-        
-        NSLayoutConstraint.activate([
-            answerLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            answerLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-
-        ])
     }
     
     override func viewDidLoad() {
@@ -55,27 +39,94 @@ class ViewController: UIViewController {
     }
     
     @objc func startGame() {
-        answerLabel.text = ""
-        if let answer = allWords.randomElement() {
-            for _ in 1...answer.count {
-                answerLabel.text! += "?"
-            }
+        guessesLeft = 7
+        guessedLetters.removeAll()
+        if let randomWord = allWords.randomElement() {
+            answer = randomWord
+            refresh()
         }
-        
+    }
+    
+    func refresh() {
+        var temp = ""
+        var won = true
+        for letter in answer {
+            if guessedLetters.firstIndex(of: letter) != nil {
+                temp.append(letter)
+            }  else {
+                temp += "?"
+                won = false
+            }
+            title = temp + " Guesses remaining: \(guessesLeft)"
+        }
+        if won {
+            let ac = UIAlertController(title: "You did it!", message: "The word is \(answer)", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            startGame()
+        }
     }
 
     @objc func promptForGuess() {
+        let ac = UIAlertController(title: "Enter guess", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+        
+        let submitAction = UIAlertAction(title: "Submit", style: .default) {
+            [weak self, weak ac] _ in
+            guard let answer = ac?.textFields?[0].text else { return }
+            self?.submit(answer)
+        }
+        
+        ac.addAction(submitAction)
+        present(ac, animated: true)
+    }
+    
+    func showErrorMessage(title: String, message: String) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
+    func submit(_ guess: String) {
+        let lowerGuess = guess.lowercased()
+        
+        if !isSingleLetter(guess: lowerGuess) {
+            showErrorMessage(title: "Steady on", message: "Guess just one letter at a time please!")
+            return
+        }
+        
+        if isAlreadyGuessed(guess: lowerGuess.first!) {
+            showErrorMessage(title: "Pull up!", message: "You've already tried that letter!")
+            return
+        }
+        guessedLetters.insert(lowerGuess.first!, at: 0)
+        
+        if !isInWord(guess: lowerGuess.first!) {
+
+            guessesLeft -= 1
+            if guessesLeft == 0 {
+                showErrorMessage(title: "Game Over", message: "The word was \(answer).\n  Better Luck Next Time")
+                startGame()
+                
+            }
+            showErrorMessage(title: "nope!", message: "That's not in the word")
+        }
+        
+        refresh()
 
     }
 
-    func guess(character: Character) {
-//        for letter in answer {
-//            if let position = answer.firstIndex(of: letter) {
-//                tempWord.remove(at: position)
-//            } else {
-//                return false
-//            }
-//        }
+    func isSingleLetter(guess: String) -> Bool {
+        return guess.count == 1
     }
+    
+    func isAlreadyGuessed(guess: Character) -> Bool {
+        return guessedLetters.firstIndex(of: guess) != nil
+    }
+    
+    func isInWord(guess: Character) -> Bool {
+        return answer.firstIndex(of: guess) != nil
+    }
+
 }
 
