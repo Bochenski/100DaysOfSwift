@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63C046FD22EDFE2500DC8276 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C046FC22EDFE2500DC8276 /* Person.swift */; };
 		63D9AA4922EC784100F2C4B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D9AA4822EC784100F2C4B9 /* AppDelegate.swift */; };
 		63D9AA4B22EC784100F2C4B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D9AA4A22EC784100F2C4B9 /* SceneDelegate.swift */; };
 		63D9AA4D22EC784100F2C4B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D9AA4C22EC784100F2C4B9 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63C046FC22EDFE2500DC8276 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		63D9AA4522EC784100F2C4B9 /* Project10.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project10.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63D9AA4822EC784100F2C4B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63D9AA4A22EC784100F2C4B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				63D9AA4822EC784100F2C4B9 /* AppDelegate.swift */,
 				63D9AA4A22EC784100F2C4B9 /* SceneDelegate.swift */,
 				63D9AA4C22EC784100F2C4B9 /* ViewController.swift */,
+				63C046FC22EDFE2500DC8276 /* Person.swift */,
 				63D9AA4E22EC784100F2C4B9 /* Main.storyboard */,
 				63D9AA5C22EC7D6D00F2C4B9 /* PersonCell.swift */,
 				63D9AA5122EC784200F2C4B9 /* Assets.xcassets */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C046FD22EDFE2500DC8276 /* Person.swift in Sources */,
 				63D9AA4D22EC784100F2C4B9 /* ViewController.swift in Sources */,
 				63D9AA4922EC784100F2C4B9 /* AppDelegate.swift in Sources */,
 				63D9AA5D22EC7D6D00F2C4B9 /* PersonCell.swift in Sources */,
