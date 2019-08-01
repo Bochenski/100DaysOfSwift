@@ -10,10 +10,17 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel: SKLabelNode!
+    var ballsLabel: SKLabelNode!
     
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
+        }
+    }
+    
+    var balls = 5 {
+        didSet {
+            ballsLabel.text = "Balls Left: \(balls)"
         }
     }
     
@@ -28,6 +35,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    var resetLabel: SKLabelNode!
+    
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: 512, y: 384)
@@ -41,10 +50,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.position = CGPoint(x: 980, y: 700)
         addChild(scoreLabel)
         
+        ballsLabel = SKLabelNode(fontNamed: "Chalkduster")
+        ballsLabel.text = "Balls Left: 5"
+        ballsLabel.horizontalAlignmentMode = .right
+        ballsLabel.position = CGPoint(x: 980, y: 650)
+        addChild(ballsLabel)
+        
         editLabel = SKLabelNode(fontNamed: "Chalkduster")
         editLabel.text = "Edit"
         editLabel.position = CGPoint(x: 80, y: 700)
         addChild(editLabel)
+        
+        resetLabel = SKLabelNode(fontNamed: "Chalkduster")
+        resetLabel.text = "Reset"
+        resetLabel.position = CGPoint(x: 80, y: 650)
+        addChild(resetLabel)
         
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = self
@@ -69,6 +89,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if objects.contains(editLabel) {
             editingMode.toggle()
+        } else if objects.contains(resetLabel) {
+            score = 0
+            balls = 5
         } else {
             if editingMode {
                 let size = CGSize(width: Int.random(in: 16...128), height: 16)
@@ -77,17 +100,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 box.position = location
                 box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
                 box.physicsBody?.isDynamic = false
+                box.name = "box"
                 addChild(box)
-            } else {
-                let ball = SKSpriteNode(imageNamed: "ballRed")
+            } else if balls > 0{
+                balls -= 1
+                let ball = randomBall()
                 ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
                 ball.physicsBody?.restitution = 0.4
                 ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0
-                ball.position = location
+                ball.position = CGPoint(x: location.x, y: 700)
                 ball.name = "ball"
                 addChild(ball)
             }
         }
+    }
+    
+    func randomBall() -> SKSpriteNode {
+        let choice = Int.random(in: 0...6)
+        switch choice {
+        case 0:
+            return SKSpriteNode(imageNamed: "ballBlue")
+        case 1:
+            return SKSpriteNode(imageNamed: "ballCyan")
+        case 2:
+            return SKSpriteNode(imageNamed: "ballGreen")
+        case 3:
+            return SKSpriteNode(imageNamed: "ballGrey")
+        case 4:
+            return SKSpriteNode(imageNamed: "ballPurple")
+        case 5:
+            return SKSpriteNode(imageNamed: "ballRed")
+        case 6:
+            return SKSpriteNode(imageNamed: "ballYellow")
+        default:
+            return SKSpriteNode(imageNamed: "ballRed")
+        }
+        
+        
     }
 
     func makeBouncer(at position: CGPoint) {
@@ -129,16 +178,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func collision(between ball: SKNode, object: SKNode) {
         if object.name == "good" {
-            destroy(ball: ball)
+            destroy(ball)
             score += 1
+            balls += 1
         } else if object.name == "bad" {
-            destroy(ball: ball)
+            destroy(ball)
             score -= 1
+        } else if object.name == "box" {
+            destroy(object)
         }
     }
     
-    func destroy(ball: SKNode) {
-        ball.removeFromParent()
+    func destroy(_ object: SKNode) {
+        if let fireParticles = SKEmitterNode(fileNamed: "FireParticles") {
+            fireParticles.position = object.position
+            addChild(fireParticles)
+        }
+        
+        object.removeFromParent()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
