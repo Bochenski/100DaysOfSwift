@@ -16,7 +16,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(startGame))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(restartGame))
         
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsURL) {
@@ -27,15 +27,28 @@ class ViewController: UITableViewController {
         if allWords.isEmpty {
             allWords = ["silkworm"]
         }
-        
         startGame()
     }
     
-    @objc func startGame() {
-        title = allWords.randomElement()
+    @objc func restartGame() {
         let defaults = UserDefaults.standard
-        defaults.set(title, forKey: "currentWord")
         usedWords.removeAll(keepingCapacity: true)
+        defaults.set(nil, forKey: "currentWord")
+        defaults.set(usedWords, forKey: "usedWords")
+        startGame()
+    }
+   
+    func startGame() {
+        let defaults = UserDefaults.standard
+        if let word = defaults.string(forKey: "currentWord") {
+            title = word
+            usedWords = defaults.stringArray(forKey: "usedWords") ?? [String]()
+        } else {
+            title = allWords.randomElement()
+            defaults.set(title, forKey: "currentWord")
+        }
+
+
         tableView.reloadData()
     }
     
@@ -44,7 +57,7 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "a", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Word", for: indexPath)
         cell.textLabel?.text = usedWords[indexPath.row]
         return cell
     }
@@ -94,6 +107,8 @@ class ViewController: UITableViewController {
         }
         
         usedWords.insert(answer.lowercased(), at: 0)
+        let defaults = UserDefaults.standard
+        defaults.set(usedWords, forKey: "usedWords")
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
 
