@@ -33,6 +33,8 @@ class ViewController: UITableViewController {
     
     @objc func startGame() {
         title = allWords.randomElement()
+        let defaults = UserDefaults.standard
+        defaults.set(title, forKey: "currentWord")
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
     }

@@ -15,6 +15,7 @@ class ViewController: UIViewController {
    
     var countries = [String]()
     var score = 0
+    var highScore = 0
     var correctAnswer = 0
     var questionsAsked = 0
     
@@ -35,6 +36,9 @@ class ViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(scoreTapped))
         
+        let defaults = UserDefaults.standard
+        highScore = defaults.integer(forKey: "highScore")
+        
         askQuestion()
     }
 
@@ -48,7 +52,14 @@ class ViewController: UIViewController {
     
     func askQuestion(action: UIAlertAction! = nil) {
         if questionsAsked == 10 {
-            let acFinish = UIAlertController(title: "Complete", message: "Your final score is \(score)", preferredStyle: .alert)
+            var message =  "Your final score is \(score)"
+            if score > highScore  {
+                highScore = score
+                let defaults = UserDefaults.standard
+                defaults.set(highScore, forKey: "highScore")
+                message = "\(score) is the new high score!"
+            }
+            let acFinish = UIAlertController(title: "Complete", message: message, preferredStyle: .alert)
             acFinish.addAction(UIAlertAction(title: "End Game", style: .default, handler: nil))
             present(acFinish, animated: true)
             return

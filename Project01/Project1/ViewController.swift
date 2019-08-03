@@ -15,6 +15,7 @@ class ViewController: UITableViewController {
         
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let fm = FileManager.default
             let path = Bundle.main.resourcePath!
@@ -36,13 +37,20 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         cell.textLabel?.text = pictures[indexPath.row]
+        let defaults = UserDefaults.standard
+        cell.detailTextLabel?.text = "views \(defaults.integer(forKey: pictures[indexPath.row]))"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            let defaults = UserDefaults.standard
+            
             vc.selectedImage = pictures[indexPath.row]
             vc.selectedTitle = "\(indexPath.row + 1) of \(pictures.count)"
+            defaults.set(defaults.integer(forKey: pictures[indexPath.row]) + 1, forKey: pictures[indexPath.row] )
+            tableView.reloadData()
             navigationController?.pushViewController(vc, animated: true)
         }
     }
