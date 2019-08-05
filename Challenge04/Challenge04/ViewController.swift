@@ -73,7 +73,7 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate, UI
   
         let image = images[indexPath.row]
         
-        cell.detailTextLabel?.text = image.comment
+        cell.textLabel?.text = image.comment
         
         let path = getDocumentsDirectory().appendingPathComponent(image.path)
         cell.imageView?.image = UIImage(contentsOfFile: path.path)
