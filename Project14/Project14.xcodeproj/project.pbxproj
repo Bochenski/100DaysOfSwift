@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E6B5288230ADDF6008BF156 /* GameOver.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B5287230ADDF6008BF156 /* GameOver.caf */; };
+		2E6B5290230AE568008BF156 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B528F230AE568008BF156 /* Smoke.sks */; };
+		2E6B5292230AE59E008BF156 /* Mud.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B5291230AE59E008BF156 /* Mud.sks */; };
 		63FCB9822309680F00E286EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCB9812309680F00E286EC /* AppDelegate.swift */; };
 		63FCB9842309680F00E286EC /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 63FCB9832309680F00E286EC /* GameScene.sks */; };
 		63FCB9882309680F00E286EC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCB9872309680F00E286EC /* GameScene.swift */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E6B5287230ADDF6008BF156 /* GameOver.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameOver.caf; sourceTree = "<group>"; };
+		2E6B528F230AE568008BF156 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Smoke.sks; sourceTree = "<group>"; };
+		2E6B5291230AE59E008BF156 /* Mud.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Mud.sks; sourceTree = "<group>"; };
 		63FCB97E2309680F00E286EC /* Project14.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project14.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FCB9812309680F00E286EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63FCB9832309680F00E286EC /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -72,9 +78,12 @@
 				63FCB98E2309681000E286EC /* Assets.xcassets */,
 				63FCB9902309681000E286EC /* LaunchScreen.storyboard */,
 				63FCB9932309681000E286EC /* Info.plist */,
+				2E6B528F230AE568008BF156 /* Smoke.sks */,
+				2E6B5291230AE59E008BF156 /* Mud.sks */,
 				63FCB999230968B700E286EC /* whack.caf */,
 				63FCB99A230968B700E286EC /* whackBad.caf */,
 				63FCB99D23096BD900E286EC /* WhackSlot.swift */,
+				2E6B5287230ADDF6008BF156 /* GameOver.caf */,
 			);
 			path = Project14;
 			sourceTree = "<group>";
@@ -143,6 +152,9 @@
 				63FCB98F2309681000E286EC /* Assets.xcassets in Resources */,
 				63FCB9922309681000E286EC /* LaunchScreen.storyboard in Resources */,
 				63FCB99C230968B700E286EC /* whackBad.caf in Resources */,
+				2E6B5292230AE59E008BF156 /* Mud.sks in Resources */,
+				2E6B5288230ADDF6008BF156 /* GameOver.caf in Resources */,
+				2E6B5290230AE568008BF156 /* Smoke.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
