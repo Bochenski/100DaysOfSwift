@@ -22,14 +22,38 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let washington = Capital(title: "Washington DC", coordinate: CLLocationCoordinate2D(latitude: 38.895111, longitude: -77.036667), info: "Named after George himself.")
         
         mapView.addAnnotations([london, oslo, paris, rome, washington])
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map Type", style: .plain, target: self, action: #selector(chooseMapTapped))
     }
 
+    @objc func chooseMapTapped() {
+        let ac = UIAlertController(title: "Mapping type", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Standard", style: .default, handler: changeMap))
+        ac.addAction(UIAlertAction(title: "Satellite", style: .default, handler: changeMap))
+        ac.addAction(UIAlertAction(title: "Hybrid", style: .default, handler: changeMap))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac, animated: true)
+    }
+    
+    func changeMap(action: UIAlertAction) {
+        switch action.title {
+        case "Satellite":
+            mapView.mapType = .satellite
+        case "Hybrid":
+            mapView.mapType = .hybrid
+        case "Standard":
+            mapView.mapType = .standard
+        default:
+            mapView.mapType = .standard
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is Capital else { return nil }
         
         let identifier = "Capital"
         
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
         
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
@@ -42,6 +66,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         
+        annotationView?.pinTintColor = UIColor.orange
         return annotationView
     }
     
@@ -49,10 +74,16 @@ class ViewController: UIViewController, MKMapViewDelegate {
         guard let capital = view.annotation as? Capital else { return }
         
         let placeName = capital.title
-        let placeInfo = capital.info
-        let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
-        present(ac, animated: true)
+//        let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
+//        ac.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(ac, animated: true)
+        
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Browser") as? WebPageViewController {
+            vc.selectedPage = "en.wikipedia.org/wiki/\(placeName!)"
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+
     }
 }
 
