@@ -15,8 +15,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel: SKLabelNode!
     
     var possibleEnemies = ["ball", "hammer", "tv"]
-    var gameTime: Timer?
+    var gameTimer: Timer?
     var isGameOver = false
+    var enemiesCreated = 0
+    var enemyInterval = 1.0
     
     var score = 0 {
         didSet {
@@ -38,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position = CGPoint(x: 100, y: 384)
         player.physicsBody = SKPhysicsBody(texture: player.texture!, size: player.size)
         player.physicsBody?.contactTestBitMask = 1
+        player.name = "player"
         addChild(player)
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -50,11 +53,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
         
-        gameTime = Timer.scheduledTimer(timeInterval: 0.35, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
+        gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
     }
     
     @objc func createEnemy() {
         guard let enemy = possibleEnemies.randomElement() else { return }
+        
+        enemiesCreated += 1
+        
+        if enemiesCreated % 20 == 0 {
+            gameTimer?.invalidate()
+            enemyInterval -= 0.1
+            gameTimer = Timer.scheduledTimer(timeInterval: enemyInterval, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
+        }
         
         let sprite = SKSpriteNode(imageNamed: enemy)
         sprite.position = CGPoint(x: 1200, y: Int.random(in: 50...736))
@@ -84,13 +95,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         guard let touch = touches.first else { return }
         
         var location = touch.location(in: self)
-        if location.y < 100 {
-            location.y = 100
-        } else if location.y > 668 {
-            location.y = 668
-        }
+        let tappedNodes = nodes(at: location)
         
-        player.position = location
+        for node in tappedNodes {
+            if node.name == "player" {
+                if location.y < 100 {
+                    location.y = 100
+                } else if location.y > 668 {
+                    location.y = 668
+                }
+                
+                player.position = location
+            }
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -100,5 +117,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player.removeFromParent()
         isGameOver = true
+        gameTimer?.invalidate()
     }
 }
