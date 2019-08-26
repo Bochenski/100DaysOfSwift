@@ -12,6 +12,5 @@ struct Country: Codable {
     var name: String
     var capital: String
     var population: Int
-    var area: Int
+    var area: Double?
 }
-

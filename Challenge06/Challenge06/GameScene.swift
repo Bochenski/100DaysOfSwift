@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     var bulletsSprite: SKSpriteNode!
+    var bulletsSprite2: SKSpriteNode!
     
     var bulletTextures = [
         SKTexture(imageNamed: "shots0"),
@@ -50,12 +51,12 @@ class GameScene: SKScene {
     
     func createBackground() {
         let background = SKSpriteNode(imageNamed: "wood-background")
-        background.position = CGPoint(x: 400, y: 300)
+        background.position = CGPoint(x: 512, y: 384)
         background.blendMode = .replace
         addChild(background)
         
         let grass = SKSpriteNode(imageNamed: "grass-trees")
-        grass.position = CGPoint(x: 400, y: 300)
+        grass.position = CGPoint(x: 512, y: 384)
         addChild(grass)
         grass.zPosition = 100
     }
@@ -86,7 +87,7 @@ class GameScene: SKScene {
     
     func createOverlay() {
         let curtains = SKSpriteNode(imageNamed: "curtains")
-        curtains.position = CGPoint(x: 400, y: 300)
+        curtains.position = CGPoint(x: 512, y: 384)
         curtains.zPosition = 400
         addChild(curtains)
         
@@ -94,6 +95,11 @@ class GameScene: SKScene {
         bulletsSprite.position = CGPoint(x: 170, y: 60)
         bulletsSprite.zPosition = 500
         addChild(bulletsSprite)
+        
+        bulletsSprite2 = SKSpriteNode(imageNamed: "shots3")
+        bulletsSprite2.position = CGPoint(x: 200, y: 60)
+        bulletsSprite2.zPosition = 500
+        addChild(bulletsSprite2)
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.horizontalAlignmentMode = .right

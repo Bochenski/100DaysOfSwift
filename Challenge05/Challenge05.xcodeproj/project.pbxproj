@@ -16,6 +16,7 @@
 		638EC470230D44FB006CB906 /* allCountries.json in Resources */ = {isa = PBXBuildFile; fileRef = 638EC46F230D44FB006CB906 /* allCountries.json */; };
 		638EC474230D4553006CB906 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638EC473230D4553006CB906 /* Country.swift */; };
 		638EC476230D45C9006CB906 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638EC475230D45C9006CB906 /* Countries.swift */; };
+		63FF26C62314247A005DE7AA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FF26C52314247A005DE7AA /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		638EC46F230D44FB006CB906 /* allCountries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = allCountries.json; sourceTree = "<group>"; };
 		638EC473230D4553006CB906 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		638EC475230D45C9006CB906 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
+		63FF26C52314247A005DE7AA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				638EC469230D44B2006CB906 /* Info.plist */,
 				638EC46F230D44FB006CB906 /* allCountries.json */,
 				638EC473230D4553006CB906 /* Country.swift */,
+				63FF26C52314247A005DE7AA /* DetailViewController.swift */,
 				638EC475230D45C9006CB906 /* Countries.swift */,
 			);
 			path = Challenge05;
@@ -151,6 +154,7 @@
 				638EC474230D4553006CB906 /* Country.swift in Sources */,
 				638EC460230D44B2006CB906 /* ViewController.swift in Sources */,
 				638EC45C230D44B2006CB906 /* AppDelegate.swift in Sources */,
+				63FF26C62314247A005DE7AA /* DetailViewController.swift in Sources */,
 				638EC476230D45C9006CB906 /* Countries.swift in Sources */,
 				638EC45E230D44B2006CB906 /* SceneDelegate.swift in Sources */,
 			);
