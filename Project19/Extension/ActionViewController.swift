@@ -19,7 +19,9 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        let pickerButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(picker))
+        navigationItem.rightBarButtonItems = [doneButton, pickerButton]
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -68,6 +70,16 @@ class ActionViewController: UIViewController {
         
         let selectedRange = script.selectedRange
         script.scrollRangeToVisible(selectedRange)
+    }
+    
+    @objc func picker() {
+        let ac = UIAlertController(title: "Picker", message: "Choose code snippet", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Alert", style: .default, handler: snippetSelected))
+        present(ac, animated: true)
+    }
+    
+    func snippetSelected(action: UIAlertAction) {
+        script.text = action.title
     }
 
 }
