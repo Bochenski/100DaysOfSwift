@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
+                scene.scaleMode = .fill
             
                 
                 // Present the scene
@@ -47,5 +47,12 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        guard let skView = view as? SKView else { return }
+        
+        guard let gameScene = skView.scene as? GameScene else { return }
+        gameScene.explodeFireworks()
     }
 }
