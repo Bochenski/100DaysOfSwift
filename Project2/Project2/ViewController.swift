@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate {
     @IBOutlet var button1: UIButton!
     @IBOutlet var button2: UIButton!
     @IBOutlet var button3: UIButton!
@@ -21,6 +21,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerLocal))
+
+        
         countries += ["estonia", "france", "germany",
                       "ireland", "italy", "monaco",
                       "nigeria", "poland", "russia",
@@ -39,9 +43,83 @@ class ViewController: UIViewController {
         let defaults = UserDefaults.standard
         highScore = defaults.integer(forKey: "highScore")
         
+        scheduleLocal()
+        
         askQuestion()
     }
+    
+    @objc func registerLocal() {
+          let center = UNUserNotificationCenter.current()
+          center.requestAuthorization(options: [.alert, .badge, .sound]) {
+              granted, error in
+              if granted {
+                  print("Yay!")
+              } else {
+                  print("D'oh!")
+              }
+          }
+      }
+      
+      @objc func scheduleLocal() {
+          registerCategories()
+          
+          let center = UNUserNotificationCenter.current()
+          center.removeAllPendingNotificationRequests()
+          
+          let content = UNMutableNotificationContent()
+          content.title = "We miss you"
+          content.body = "Play the game!"
+          content.categoryIdentifier = "alarm"
+          content.userInfo = ["customData": "fizzbuzz"]
+          content.sound = .default
+          
+          var dateComponents = DateComponents()
+          dateComponents.hour = 10
+          dateComponents.minute = 30
+          
+         // let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        for day in 1...7 {
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 86400 * Double(day), repeats: false)
+            
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            center.add(request)        }
+          
 
+      }
+
+     func registerCategories() {
+            let center = UNUserNotificationCenter.current()
+            center.delegate = self
+            
+            let show = UNNotificationAction(identifier: "show", title: "Tell me more", options: .foreground)
+            let later = UNNotificationAction(identifier: "later", title: "Remind me later",
+                options: .foreground)
+            let category = UNNotificationCategory(identifier: "alarm", actions: [show, later], intentIdentifiers: [])
+            
+            center.setNotificationCategories([category])
+        }
+        
+        func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+            let userInfo = response.notification.request.content.userInfo
+            
+            if let customData = userInfo["customData"] as? String {
+                print("Custom data received: \(customData)")
+                switch response.actionIdentifier {
+                case UNNotificationDefaultActionIdentifier:
+                    // the user swiped to unlock
+                    let ac = UIAlertController(title: "Hey", message: "you're back!", preferredStyle: .alert)
+                    let submitAction = UIAlertAction(title: "OK", style: .default)
+                     ac.addAction(submitAction)
+                    present(ac, animated: true)
+                default:
+                    break
+                }
+            }
+            
+            completionHandler()
+        }
+    
     @objc func scoreTapped() {
         
         
