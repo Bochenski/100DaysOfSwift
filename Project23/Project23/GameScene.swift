@@ -44,6 +44,14 @@ class GameScene: SKScene {
     
     var isGameEnded = false
     
+    let VELOCITY_MULTIPLIER = 40
+    let MIN_X_VELOCITY = 3
+    let MAX_SLOW_X_VELOCITY = 5
+    let MIN_FAST_X_VELOCITY = 8
+    let MAX_X_VELOCITY = 15
+    let MIN_Y_VELOCITY = 24
+    let MAX_Y_VELOCITY = 32
+
     override func didMove(to view: SKView) {
         
         let background = SKSpriteNode(imageNamed: "sliceBackground")
@@ -123,11 +131,17 @@ class GameScene: SKScene {
         let nodesAtPoint = nodes(at: location)
         
         for case let node as SKSpriteNode in nodesAtPoint {
-            if node.name == "enemy" {
+            if node.name == "enemy" || node.name == "super" {
                 //destroy the penguin
                 if let emitter = SKEmitterNode(fileNamed: "sliceHitEnemy") {
                     emitter.position = node.position
                     addChild(emitter)
+                }
+   
+                if node.name == "super" {
+                    score += 10
+                } else {
+                    score += 1
                 }
                 
                 node.name = ""
@@ -139,8 +153,7 @@ class GameScene: SKScene {
                 let seq = SKAction.sequence([group, .removeFromParent()])
                 node.run(seq)
                 
-                score += 1
-                
+   
                 if let index = activeEnemies.firstIndex(of: node) {
                     activeEnemies.remove(at: index)
                 }
@@ -191,6 +204,11 @@ class GameScene: SKScene {
             livesImages[1].texture = SKTexture(imageNamed: "sliceLifeGone")
             livesImages[2].texture = SKTexture(imageNamed: "sliceLifeGone")
         }
+        
+        let gameOver = SKSpriteNode(imageNamed: "gameOver")
+        gameOver.position = CGPoint(x: 512, y: 384)
+        gameOver.zPosition = 1
+        addChild(gameOver)
         
     }
     
@@ -286,6 +304,10 @@ class GameScene: SKScene {
                 emitter.position = CGPoint(x: 76, y: 64)
                 enemy.addChild(emitter)
             }
+        } else if enemyType == 6 {
+            enemy = SKSpriteNode(imageNamed: "penguinSuper")
+            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+            enemy.name = "super"
         } else {
             enemy = SKSpriteNode(imageNamed: "penguin")
             run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
@@ -299,19 +321,25 @@ class GameScene: SKScene {
         let randomXVelocity: Int
         
         if randomPosition.x < 256 {
-            randomXVelocity = Int.random(in: 8...15)
+            randomXVelocity = Int.random(in: MIN_FAST_X_VELOCITY...MAX_X_VELOCITY)
         } else if randomPosition.x < 512 {
-            randomXVelocity = Int.random(in: 3...5)
+            randomXVelocity = Int.random(in: MIN_X_VELOCITY...MAX_SLOW_X_VELOCITY)
         } else if randomPosition.x < 768 {
-            randomXVelocity = -Int.random(in: 3...5)
+            randomXVelocity = -Int.random(in: MIN_X_VELOCITY...MAX_SLOW_X_VELOCITY)
         } else {
-            randomXVelocity = -Int.random(in: 8...15)
+            randomXVelocity = -Int.random(in: MIN_FAST_X_VELOCITY...MAX_X_VELOCITY)
         }
         
-        let randomYVelocity = Int.random(in: 24...32)
+        let randomYVelocity = Int.random(in: MIN_Y_VELOCITY...MAX_Y_VELOCITY)
+        
+        var superSpeed = 1
+        
+        if enemy.name == "super" {
+            superSpeed = 10
+        }
         
         enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
-        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
+        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * VELOCITY_MULTIPLIER + superSpeed, dy: randomYVelocity * VELOCITY_MULTIPLIER + superSpeed)
         enemy.physicsBody?.angularVelocity = randomAngularVelocity
         enemy.physicsBody?.collisionBitMask = 0
         addChild(enemy)
@@ -347,7 +375,7 @@ class GameScene: SKScene {
                 if node.position.y < -140 {
                     node.removeAllActions()
                     
-                    if node.name == "enemy" {
+                    if node.name == "enemy" || node.name == "super" {
                         node.name = ""
                         subtractLife()
                         
