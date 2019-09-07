@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var distanceReading: UILabel!
     @IBOutlet var beaconName: UILabel!
+    @IBOutlet var proximityCircle: UIView!
     var locationManager: CLLocationManager?
     var foundIt = false
     
@@ -23,6 +24,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager?.requestAlwaysAuthorization()
         
         view.backgroundColor = .gray
+        
+        proximityCircle.layer.cornerRadius = 128
+        proximityCircle.layer.zPosition = 1
+        beaconName.layer.zPosition = 2
+        distanceReading.layer.zPosition = 2
+
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -47,25 +54,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let br = CLBeaconRegion(beaconIdentityConstraint: bc, identifier: id)
         
         locationManager?.startMonitoring(for: br)
-        locationManager?.startMonitoring(for: <#T##CLRegion#>)
-        locationManager?.startRangingBeacons(satisfying: bc)
-        
     }
+
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+         let beaconRegion = region as? CLBeaconRegion
+         if state == .inside {
+             // Start ranging when inside a region.
+             manager.startRangingBeacons(satisfying: beaconRegion!.beaconIdentityConstraint)
+         } else {
+             // Stop ranging when not inside a region.
+             manager.stopRangingBeacons(satisfying: beaconRegion!.beaconIdentityConstraint)
+         }
+     }
+    
     
     func update(distance: CLProximity) {
         UIView.animate(withDuration: 1) {
             switch distance {
             case .far:
-                self.view.backgroundColor = .blue
+                //self.view.backgroundColor = .blue
+                self.proximityCircle.layer.backgroundColor = UIColor.blue.cgColor
+                self.proximityCircle.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                 self.distanceReading.text = "FAR"
             case .near:
-                self.view.backgroundColor = .orange
+                //self.view.backgroundColor = .orange
+                self.proximityCircle.layer.backgroundColor = UIColor.orange.cgColor
+                self.proximityCircle.transform = CGAffineTransform(scaleX: 1, y:  1)
                 self.distanceReading.text = "NEAR"
             case .immediate:
-                self.view.backgroundColor = .red
+                //self.view.backgroundColor = .red
+                self.proximityCircle.layer.backgroundColor = UIColor.red.cgColor
                 self.distanceReading.text = "RIGHT HERE"
+                self.proximityCircle.transform = CGAffineTransform(scaleX: 0.25, y: 0.25)
             default:
-                self.view.backgroundColor = .gray
+                //self.view.backgroundColor = .gray
+                self.proximityCircle.layer.backgroundColor = UIColor.gray.cgColor
                 self.distanceReading.text = "UNKNOWN"
             }
         }
@@ -84,6 +107,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
             
             beaconName.text = "\(beaconConstraint.major ?? 0)-\(beaconConstraint.minor ?? 0)"
+           // print("\(beaconConstraint.uuid.uuidString)- \(beaconConstraint.major ?? 0)-\(beaconConstraint.minor ?? 0)")
             update(distance: beacon.proximity)
         }
     }

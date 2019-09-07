@@ -27,12 +27,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xxB-vf-KhX">
+                                <rect key="frame" x="79" y="325" width="256" height="256"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="256" id="XgY-Ov-PGJ"/>
+                                    <constraint firstAttribute="width" constant="256" id="xCW-vd-bbL"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="mGI-5W-kJC" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="2ab-w2-PvQ"/>
                             <constraint firstItem="T12-Rx-u5z" firstAttribute="centerX" secondItem="mGI-5W-kJC" secondAttribute="centerX" id="47l-8p-y5i"/>
                             <constraint firstItem="T12-Rx-u5z" firstAttribute="top" secondItem="mGI-5W-kJC" secondAttribute="bottom" constant="39" id="CGj-JB-rCv"/>
+                            <constraint firstItem="xxB-vf-KhX" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="JMS-Zc-NnF"/>
+                            <constraint firstItem="xxB-vf-KhX" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="KUO-Zm-D1x"/>
                             <constraint firstItem="mGI-5W-kJC" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="c7k-nv-1Ha"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -40,11 +50,12 @@
                     <connections>
                         <outlet property="beaconName" destination="T12-Rx-u5z" id="tMP-W3-06g"/>
                         <outlet property="distanceReading" destination="mGI-5W-kJC" id="pNL-GJ-cuR"/>
+                        <outlet property="proximityCircle" destination="xxB-vf-KhX" id="JZ1-EF-J5v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="136"/>
+            <point key="canvasLocation" x="137.68115942028987" y="135.9375"/>
         </scene>
     </scenes>
 </document>
