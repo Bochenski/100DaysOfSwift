@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		6329BA29232D299A004B9517 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BA28232D299A004B9517 /* AppDelegate.swift */; };
-		6329BA2B232D299A004B9517 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BA2A232D299A004B9517 /* SceneDelegate.swift */; };
 		6329BA2D232D299A004B9517 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BA2C232D299A004B9517 /* ViewController.swift */; };
 		6329BA30232D299A004B9517 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6329BA2E232D299A004B9517 /* Main.storyboard */; };
 		6329BA32232D299C004B9517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6329BA31232D299C004B9517 /* Assets.xcassets */; };
@@ -16,9 +15,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6329BA25232D299A004B9517 /* Project25.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project25.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6329BA25232D299A004B9517 /* Project25A.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project25A.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6329BA28232D299A004B9517 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6329BA2A232D299A004B9517 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6329BA2C232D299A004B9517 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6329BA2F232D299A004B9517 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6329BA31232D299C004B9517 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,7 +46,7 @@
 		6329BA26232D299A004B9517 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6329BA25232D299A004B9517 /* Project25.app */,
+				6329BA25232D299A004B9517 /* Project25A.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				6329BA28232D299A004B9517 /* AppDelegate.swift */,
-				6329BA2A232D299A004B9517 /* SceneDelegate.swift */,
 				6329BA2C232D299A004B9517 /* ViewController.swift */,
 				6329BA2E232D299A004B9517 /* Main.storyboard */,
 				6329BA31232D299C004B9517 /* Assets.xcassets */,
@@ -84,7 +81,7 @@
 			);
 			name = Project25;
 			productName = Project25;
-			productReference = 6329BA25232D299A004B9517 /* Project25.app */;
+			productReference = 6329BA25232D299A004B9517 /* Project25A.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -99,11 +96,13 @@
 				TargetAttributes = {
 					6329BA24232D299A004B9517 = {
 						CreatedOnToolsVersion = 11.0;
+						DevelopmentTeam = FEN6WTMSLU;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 6329BA20232D299A004B9517 /* Build configuration list for PBXProject "Project25" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -140,7 +139,6 @@
 			files = (
 				6329BA2D232D299A004B9517 /* ViewController.swift in Sources */,
 				6329BA29232D299A004B9517 /* AppDelegate.swift in Sources */,
-				6329BA2B232D299A004B9517 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,8 +272,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -287,15 +284,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FEN6WTMSLU;
 				INFOPLIST_FILE = Project25/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.goincremental.Project25;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goincremental.Project25A;
+				PRODUCT_NAME = Project25A;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -306,15 +300,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FEN6WTMSLU;
 				INFOPLIST_FILE = Project25/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.goincremental.Project25;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goincremental.Project25A;
+				PRODUCT_NAME = Project25A;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
