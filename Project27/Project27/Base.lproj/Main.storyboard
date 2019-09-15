@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Project27" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BME-Ei-c9E">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eA-Gw-PyP">
+                                <rect key="frame" x="358" y="994" width="52" height="30"/>
+                                <state key="normal" title="Redraw"/>
+                                <connections>
+                                    <action selector="redrawTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rP5-m3-F6Z"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="BME-Ei-c9E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CMe-eo-sDL"/>
+                            <constraint firstItem="BME-Ei-c9E" firstAttribute="bottom" secondItem="2eA-Gw-PyP" secondAttribute="bottom" id="KCF-yW-vb6"/>
+                            <constraint firstItem="BME-Ei-c9E" firstAttribute="centerX" secondItem="2eA-Gw-PyP" secondAttribute="centerX" id="NlA-aE-aHx"/>
+                            <constraint firstItem="BME-Ei-c9E" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Zjj-du-6Kg"/>
+                            <constraint firstItem="BME-Ei-c9E" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qWD-ky-TpG"/>
+                            <constraint firstItem="BME-Ei-c9E" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="xPe-Iq-AK4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="BME-Ei-c9E" id="Q2F-83-0wJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.5" y="138.28125"/>
+        </scene>
+    </scenes>
+</document>
