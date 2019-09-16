@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     @IBAction func redrawTapped(_ sender: Any) {
         currentDrawType += 1
         
-        if currentDrawType > 5 {
+        if currentDrawType > 6 {
             currentDrawType = 0
         }
         
@@ -39,6 +39,8 @@ class ViewController: UIViewController {
             drawLines()
         case 5:
             drawImagesAndText()
+        case 6:
+            drawEmoji()
         default:
             break
         }
@@ -62,6 +64,34 @@ class ViewController: UIViewController {
         imageView.image = image
     }
     
+    func drawEmoji() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let image = renderer.image { ctx in
+            let rectangle = CGRect(x: 206, y: 206, width: 50, height: 50)
+            
+
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
+            ctx.cgContext.setLineWidth(1)
+            
+            ctx.cgContext.addEllipse(in: rectangle)
+
+            ctx.cgContext.move(to: CGPoint(x: 220, y: 235))
+            ctx.cgContext.addQuadCurve(to: CGPoint(x: 242, y: 235), control: CGPoint(x:231, y: 260))
+            
+            let leftEye = CGRect(x: 220, y: 0, width: 5, height: 5)
+            ctx.cgContext.setFillColor(UIColor.black.cgColor)
+            ctx.cgContext.setFillColor(UIColor.yellow.cgColor)
+            ctx.cgContext.drawPath(using: .fillStroke)
+            
+            ctx.cgContext.addEllipse(in: leftEye)
+            
+        
+        }
+        
+        imageView.image = image
+    }
+    
     func drawCircle() {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
         
@@ -74,6 +104,8 @@ class ViewController: UIViewController {
             
             ctx.cgContext.addEllipse(in: rectangle)
             ctx.cgContext.drawPath(using: .fillStroke)
+            
+
         }
         
         imageView.image = image
