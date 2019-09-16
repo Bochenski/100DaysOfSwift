@@ -24,7 +24,32 @@ class DetailViewController: UIViewController {
                          action: #selector(shareTapped))
         
         if let imageToLoad = selectedImage {
-            imageView.image = UIImage(named: imageToLoad)
+
+            if let picture = UIImage(named: imageToLoad) {
+                let rectangle = CGRect(x: 0, y: 0, width: picture.size.width, height: picture.size.height)
+                let renderer = UIGraphicsImageRenderer(size: picture.size)
+                let image = renderer.image { ctx in
+                    
+                    let paragraphyStyle = NSMutableParagraphStyle()
+                    paragraphyStyle.alignment = .center
+                    
+                    picture.draw(in: rectangle)
+                
+                    
+                     let attrs: [NSAttributedString.Key: Any] = [
+                         .font: UIFont.systemFont(ofSize: 36),
+                         .paragraphStyle: paragraphyStyle
+                     ]
+                    
+                    let string = "From Storm Viewer"
+                    
+                    let attributedString = NSAttributedString(string: string, attributes: attrs)
+                    
+                    attributedString.draw(with: CGRect(x: 290, y: 64, width: 448, height: 448), options: .usesLineFragmentOrigin, context: nil)
+                }
+                
+                imageView.image = image
+            }
         }
     }
     

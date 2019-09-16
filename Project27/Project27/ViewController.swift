@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     @IBAction func redrawTapped(_ sender: Any) {
         currentDrawType += 1
         
-        if currentDrawType > 5 {
+        if currentDrawType > 6 {
             currentDrawType = 0
         }
         
@@ -39,6 +39,8 @@ class ViewController: UIViewController {
             drawLines()
         case 5:
             drawImagesAndText()
+        case 6:
+            drawEmoji()
         default:
             break
         }
@@ -57,6 +59,78 @@ class ViewController: UIViewController {
             
             ctx.cgContext.addRect(rectangle)
             ctx.cgContext.drawPath(using: .fillStroke)
+      
+        }
+        
+        imageView.image = image
+    }
+    
+    func drawEmoji() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let image = renderer.image { ctx in
+            let rectangle = CGRect(x: 206, y: 206, width: 50, height: 50)
+            
+
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
+            ctx.cgContext.setLineWidth(1)
+            
+            ctx.cgContext.addEllipse(in: rectangle)
+
+
+            ctx.cgContext.setFillColor(UIColor.yellow.cgColor)
+            ctx.cgContext.drawPath(using: .fillStroke)
+//
+            
+            ctx.cgContext.move(to: CGPoint(x: 220, y: 235))
+            ctx.cgContext.addQuadCurve(to: CGPoint(x: 242, y: 235), control: CGPoint(x:231, y: 260))
+            ctx.cgContext.drawPath(using: .fillStroke)
+            
+            let leftEye = CGRect(x: 218, y: 225, width: 5, height: 5)
+            ctx.cgContext.setFillColor(UIColor.black.cgColor)
+            
+            ctx.cgContext.addEllipse(in: leftEye)
+            ctx.cgContext.drawPath(using: .fillStroke)
+
+            let rightEye = CGRect(x: 240, y: 225, width: 5, height: 5)
+            ctx.cgContext.setFillColor(UIColor.black.cgColor)
+            
+            ctx.cgContext.addEllipse(in: rightEye)
+            ctx.cgContext.drawPath(using: .fillStroke)
+            
+            let xStart = 100
+            let yTop = 50
+            let yBottom = yTop + 50
+            
+            let width = 26
+            
+            ctx.cgContext.setFillColor(UIColor.white.cgColor)
+            
+            //t
+            ctx.cgContext.move(to: CGPoint(x: xStart, y: yTop))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 2, y: yTop))
+            ctx.cgContext.move(to: CGPoint(x: xStart + width, y: yTop))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width, y: yBottom))
+            
+            //w
+            ctx.cgContext.move(to: CGPoint(x: xStart + width * 3, y: yTop))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 4, y: yBottom))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 4 + 13, y: yBottom - 10))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 5, y: yBottom))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 6, y: yTop))
+            
+            //I
+            ctx.cgContext.move(to: CGPoint(x: xStart + width * 7, y: yTop))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 7, y: yBottom))
+            
+            //N
+            ctx.cgContext.move(to: CGPoint(x: xStart + width * 8, y: yBottom))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 8, y: yTop))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 9, y: yBottom))
+            ctx.cgContext.addLine(to: CGPoint(x: xStart + width * 9, y: yTop))
+            
+            ctx.cgContext.drawPath(using: .fillStroke)
+            
         }
         
         imageView.image = image
@@ -74,6 +148,8 @@ class ViewController: UIViewController {
             
             ctx.cgContext.addEllipse(in: rectangle)
             ctx.cgContext.drawPath(using: .fillStroke)
+            
+
         }
         
         imageView.image = image
