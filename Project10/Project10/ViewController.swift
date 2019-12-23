@@ -7,19 +7,67 @@
 //
 
 import UIKit
-
+import LocalAuthentication
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var people = [Person]()
+    var authenticated = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(lock), name: UIApplication.willResignActiveNotification, object: nil)
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(authenticate))
+        navigationItem.leftBarButtonItem?.isEnabled = false
     }
 
+    @objc func authenticate(_ sender: Any) {
+        
+        guard !authenticated else {
+            lock()
+            return
+        }
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Identify yourself!"
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+                DispatchQueue.main.async {
+                    if success {
+                        self?.unlock()
+                    } else {
+                        let ac = UIAlertController(title: "Authentication Failed", message: "You could not be verified please try again.", preferredStyle: .alert)
+                        ac.addAction(UIAlertAction(title: "OK", style: .default))
+                        self?.present(ac, animated: true)
+                    }
+                }
+            }
+        } else {
+            let ac = UIAlertController(title: "Authentication Unavilable", message: "Get better phone", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(ac, animated: true)
+        }
+    }
+    
+    func unlock() {
+            authenticated = true
+            collectionView.reloadData()
+            navigationItem.leftBarButtonItem?.isEnabled = true
+     }
+    
+    @objc func lock() {
+        authenticated = false
+        collectionView.reloadData()
+        navigationItem.leftBarButtonItem?.isEnabled = false
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard authenticated else { return 0 }
         return people.count
     }
     
@@ -27,6 +75,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
             fatalError("Unable to dequeue a person cell.")
         }
+
         let person = people[indexPath.item]
         
         cell.name.text = person.name
