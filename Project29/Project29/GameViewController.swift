@@ -87,5 +87,13 @@ class GameViewController: UIViewController {
         } else {
             playerNumber.text = "PLAYER TWO >>>"
         }
+        
+        angleSlider.isHidden = false
+        angleLabel.isHidden = false
+
+        velocitySlider.isHidden = false
+        velocityLabel.isHidden = false
+
+        launchButton.isHidden = false
     }
 }
