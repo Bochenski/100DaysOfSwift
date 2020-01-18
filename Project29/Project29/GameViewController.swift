@@ -19,6 +19,12 @@ class GameViewController: UIViewController {
     @IBOutlet var velocityLabel: UILabel!
     @IBOutlet var launchButton: UIButton!
     @IBOutlet var playerNumber: UILabel!
+    @IBOutlet var player1Score: UILabel!
+    @IBOutlet var player2Score: UILabel!
+    @IBOutlet var currentWind: UILabel!
+    var p1Score = 0
+    var p2Score = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +39,8 @@ class GameViewController: UIViewController {
                 
                 currentGame = scene as? GameScene
                 currentGame?.viewController = self
+             
+                currentWind.text = String(format: "Wind Strength: %.2f", currentGame!.currentWind)
             }
             
             view.ignoresSiblingOrder = true

@@ -24,6 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player2: SKSpriteNode!
     var banana: SKSpriteNode!
     var currentPlayer = 1
+    var currentWind = 0.0
     
     override func didMove(to view: SKView) {
         backgroundColor = UIColor(hue: 0.669, saturation: 0.99, brightness: 0.67, alpha: 1)
@@ -31,12 +32,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createPlayers()
         
         physicsWorld.contactDelegate = self
+        currentWind = Double.random(in: -3...3)
+        physicsWorld.gravity = CGVector(dx: currentWind, dy: -9.62)
+        self.viewController?.currentWind.text = String(format: "Wind Strength: %.2f", self.currentWind)
     }
     
     func createBuildings() {
         var currentX: CGFloat = -15
         while currentX < 1024 {
-            let size = CGSize(width: Int.random(in: 2...4) * 40, height: Int.random(in: 300...600))
+            let size = CGSize(width: Int.random(in: 2...4) * 40, height: Int.random(in: 200...500))
             currentX += size.width + 2
             
             let building = BuildingNode(color: .red, size: size)
@@ -150,6 +154,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if firstNode.name == "banana" && secondNode.name == "player2" {
             destroy(player: player2)
         }
+        
     }
     
     func destroy(player: SKSpriteNode) {
@@ -158,6 +163,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(explosion)
         }
         
+        if currentPlayer == 1 {
+            viewController?.p1Score += 1
+        } else {
+            viewController?.p2Score += 1
+        }
+        
+        if viewController!.p1Score > 2 || viewController!.p2Score > 2 {
+            self.viewController?.playerNumber.text = "Player \(currentPlayer) wins!"
+            self.viewController?.p1Score = 0
+            self.viewController?.p2Score = 0 
+        }
+        
+        
         player.removeFromParent()
         banana.removeFromParent()
         
@@ -165,7 +183,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let newGame = GameScene(size: self.size)
             newGame.viewController = self.viewController
             self.viewController?.currentGame = newGame
-            
+            self.viewController?.player1Score.text = "Player 1 Score: \(self.viewController!.p1Score)"
+            self.viewController?.player2Score.text = "Player 2 Score: \(self.viewController!.p2Score)"
             self.changePlayer()
             newGame.currentPlayer = self.currentPlayer
             
