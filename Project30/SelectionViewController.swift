@@ -9,8 +9,8 @@
 import UIKit
 
 class SelectionViewController: UITableViewController {
-	var items = [String]() // this is the array that will store the filenames to load
-	var viewControllers = [UIViewController]() // create a cache of the detail view controllers for faster loading
+    var images = [UIImage]() // this is the array that will store the cached images
+    var items = [String]()
 	var dirty = false
 
     override func viewDidLoad() {
@@ -28,7 +28,23 @@ class SelectionViewController: UITableViewController {
 		if let tempItems = try? fm.contentsOfDirectory(atPath: Bundle.main.resourcePath!) {
 			for item in tempItems {
 				if item.range(of: "Large") != nil {
-					items.append(item)
+                    
+                    // find the image for this cell, and load its thumbnail
+                    let currentImage = item
+                    let imageRootName = currentImage.replacingOccurrences(of: "Large", with: "Thumb")
+                    guard let path = Bundle.main.path(forResource: imageRootName, ofType: nil) else { continue }
+                    let original = UIImage(contentsOfFile: path)!
+                    let renderRect = CGRect(origin: .zero, size: CGSize(width: 90, height: 90))
+                    let renderer = UIGraphicsImageRenderer(size: renderRect.size)
+
+                    let rounded = renderer.image { ctx in
+                        ctx.cgContext.addEllipse(in: renderRect)
+                        ctx.cgContext.clip()
+
+                        original.draw(in: renderRect)
+                    }
+                    items.append(item)
+                    images.append(rounded)
 				}
 			}
 		}
@@ -52,7 +68,7 @@ class SelectionViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return items.count * 10
+        return images.count * 10
     }
 
 
@@ -60,33 +76,20 @@ class SelectionViewController: UITableViewController {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-		// find the image for this cell, and load its thumbnail
-		let currentImage = items[indexPath.row % items.count]
-		let imageRootName = currentImage.replacingOccurrences(of: "Large", with: "Thumb")
-		let path = Bundle.main.path(forResource: imageRootName, ofType: nil)!
-		let original = UIImage(contentsOfFile: path)!
-        let renderRect = CGRect(origin: .zero, size: CGSize(width: 90, height: 90))
-		let renderer = UIGraphicsImageRenderer(size: renderRect.size)
 
-		let rounded = renderer.image { ctx in
-			ctx.cgContext.addEllipse(in: renderRect)
-			ctx.cgContext.clip()
-
-            original.draw(in: renderRect)
-		}
-
-		cell.imageView?.image = rounded
+        cell.imageView?.image = images[indexPath.row % images.count]
 
 		// give the images a nice shadow to make them look a bit more dramatic
 		cell.imageView?.layer.shadowColor = UIColor.black.cgColor
 		cell.imageView?.layer.shadowOpacity = 1
 		cell.imageView?.layer.shadowRadius = 10
 		cell.imageView?.layer.shadowOffset = CGSize.zero
+        let renderRect = CGRect(origin: .zero, size: CGSize(width: 90, height: 90))
         cell.imageView?.layer.shadowPath = UIBezierPath(ovalIn: renderRect).cgPath
 
 		// each image stores how often it's been tapped
 		let defaults = UserDefaults.standard
-		cell.textLabel?.text = "\(defaults.integer(forKey: currentImage))"
+		cell.textLabel?.text = "\(defaults.integer(forKey: items[indexPath.row % images.count]))"
 
 		return cell
     }
@@ -99,8 +102,6 @@ class SelectionViewController: UITableViewController {
 		// mark us as not needing a counter reload when we return
 		dirty = false
 
-		// add to our view controller cache and show
-		viewControllers.append(vc)
 		navigationController!.pushViewController(vc, animated: true)
 	}
 }
